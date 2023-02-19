@@ -1,10 +1,10 @@
 package uea.pagamentosapi.services.exceptions;
 
-public class ResourceNotFoundException extends RuntimeException{
+public class ObjectNotFountException extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
 	
-	public ResourceNotFoundException(Object codigo) {
+	public ObjectNotFountException(Object codigo) {
 		super("Recurso não encontrado. código " + codigo);
 	}
 

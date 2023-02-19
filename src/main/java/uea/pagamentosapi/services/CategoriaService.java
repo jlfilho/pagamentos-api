@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import uea.pagamentosapi.model.Categoria;
 import uea.pagamentosapi.repositories.CategoriaRepository;
-import uea.pagamentosapi.services.exceptions.ResourceNotFoundException;
+import uea.pagamentosapi.services.exceptions.ObjectNotFountException;
 
 @Service
 public class CategoriaService {
@@ -30,7 +30,7 @@ public class CategoriaService {
 			Optional<Categoria> categoria = categoriaRepository.findById(codigo); 
 			return categoria.get();			
 		} catch (NoSuchElementException e) {
-			throw new ResourceNotFoundException(codigo);
+			throw new ObjectNotFountException(codigo);
 		}
 	}
 
