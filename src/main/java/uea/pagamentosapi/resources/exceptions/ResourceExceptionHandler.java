@@ -15,7 +15,7 @@ import uea.pagamentosapi.services.exceptions.ObjectNotFountException;
 public class ResourceExceptionHandler {
 	
 	@ExceptionHandler(ObjectNotFountException.class)
-	public ResponseEntity<StandardError> resourceNotFoundException(ObjectNotFountException e, HttpServletRequest resquest) {
+	public ResponseEntity<StandardError> objectNotFountException(ObjectNotFountException e, HttpServletRequest resquest) {
 		String error = "Recurso não encontrado";
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), resquest.getRequestURI());
@@ -23,7 +23,7 @@ public class ResourceExceptionHandler {
 	}
 	
 	@ExceptionHandler(HttpMessageNotReadableException.class)
-	public ResponseEntity<StandardError> resourceNotFoundException(HttpMessageNotReadableException e, HttpServletRequest resquest) {
+	public ResponseEntity<StandardError> httpMessageNotReadableException(HttpMessageNotReadableException e, HttpServletRequest resquest) {
 		String error = "Mensagem inválida";
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), resquest.getRequestURI());
