@@ -1,6 +1,7 @@
 package uea.pagamentosapi.services;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import uea.pagamentosapi.model.Categoria;
 import uea.pagamentosapi.repositories.CategoriaRepository;
+import uea.pagamentosapi.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -24,8 +26,12 @@ public class CategoriaService {
 	} 
 	
 	public Categoria buscarPorCodigo(Long codigo) {
-		Optional<Categoria> categoria = categoriaRepository.findById(codigo); 
-		return categoria.get();
+		try {
+			Optional<Categoria> categoria = categoriaRepository.findById(codigo); 
+			return categoria.get();			
+		} catch (NoSuchElementException e) {
+			throw new ResourceNotFoundException(codigo);
+		}
 	}
 
 }

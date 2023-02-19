@@ -41,7 +41,7 @@ public class CategoriaResource {
 	public ResponseEntity<?> buscarPorCodigo(@PathVariable Long codigo) {
 		Categoria categoria = categoriaService.buscarPorCodigo(codigo);
 		
-		return ResponseEntity.ok().body(categoria);
+		return categoria != null ? ResponseEntity.ok().body(categoria) : ResponseEntity.notFound().build();
 	}
 	
 	
