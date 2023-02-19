@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import jakarta.validation.Valid;
 import uea.pagamentosapi.model.Categoria;
 import uea.pagamentosapi.services.CategoriaService;
 
@@ -30,7 +31,7 @@ public class CategoriaResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Categoria> criar(@RequestBody Categoria categoria) {
+	public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria) {
 		Categoria categoriaSalva = categoriaService.criar(categoria);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{codigo}")
 				.buildAndExpand(categoriaSalva.getCodigo()).toUri();

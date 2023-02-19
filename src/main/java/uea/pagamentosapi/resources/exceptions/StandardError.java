@@ -2,6 +2,7 @@ package uea.pagamentosapi.resources.exceptions;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -11,7 +12,7 @@ public class StandardError implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", timezone = "GMT")
 	private Instant timestamp;
 	private Integer status;
-	private String error;
+	private List<String> errors;
 	private String message;
 	private String path;
 	
@@ -19,11 +20,11 @@ public class StandardError implements Serializable {
 		
 	}
 
-	public StandardError(Instant timestamp, Integer status, String error, String message, String path) {
+	public StandardError(Instant timestamp, Integer status, List<String> errors, String message, String path) {
 		super();
 		this.timestamp = timestamp;
 		this.status = status;
-		this.error = error;
+		this.errors = errors;
 		this.message = message;
 		this.path = path;
 	}
@@ -44,12 +45,12 @@ public class StandardError implements Serializable {
 		this.status = status;
 	}
 
-	public String getError() {
-		return error;
+	public List<String> getErrors() {
+		return errors;
 	}
 
-	public void setError(String error) {
-		this.error = error;
+	public void setError(List<String> errors) {
+		this.errors = errors;
 	}
 
 	public String getMessage() {
