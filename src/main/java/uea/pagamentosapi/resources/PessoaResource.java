@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import jakarta.validation.Valid;
+import uea.pagamentosapi.model.Endereco;
 import uea.pagamentosapi.model.Pessoa;
 import uea.pagamentosapi.services.PessoaService;
 
@@ -62,6 +63,12 @@ public class PessoaResource {
 	@PutMapping("/{codigo}/ativo")
 	public ResponseEntity<Pessoa> atualizarPropriedadeAtivo(@PathVariable Long codigo, @RequestBody Boolean ativo) {
 		Pessoa pessoaSalva = pessoaService.atualizarPropriedadeAtivo(codigo, ativo);
+		return ResponseEntity.ok(pessoaSalva);
+	}
+	
+	@PutMapping("/{codigo}/endereco")
+	public ResponseEntity<Pessoa> atualizarEndereco(@PathVariable Long codigo, @RequestBody Endereco endereco) {
+		Pessoa pessoaSalva = pessoaService.atualizarEndereco(codigo, endereco);
 		return ResponseEntity.ok(pessoaSalva);
 	}
 

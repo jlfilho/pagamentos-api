@@ -8,7 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.persistence.EntityNotFoundException;
+import uea.pagamentosapi.model.Endereco;
 import uea.pagamentosapi.model.Pessoa;
 import uea.pagamentosapi.repositories.PessoaRepository;
 import uea.pagamentosapi.services.exceptions.ObjectNotFountException;
@@ -49,6 +49,12 @@ public class PessoaService {
 	public Pessoa atualizarPropriedadeAtivo(Long codigo, Boolean ativo) {
 		Pessoa pessoaSalva = pessoaRepository.getReferenceById(codigo);
 		pessoaSalva.setAtivo(ativo);
+		return pessoaRepository.save(pessoaSalva);
+	}
+	
+	public Pessoa atualizarEndereco(Long codigo, Endereco endereco) {
+		Pessoa pessoaSalva = pessoaRepository.getReferenceById(codigo);
+		pessoaSalva.setEndereco(endereco);
 		return pessoaRepository.save(pessoaSalva);
 	}
 
