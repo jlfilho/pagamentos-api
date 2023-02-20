@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
 import uea.pagamentosapi.model.Pessoa;
 import uea.pagamentosapi.repositories.PessoaRepository;
 import uea.pagamentosapi.services.exceptions.ObjectNotFountException;
@@ -38,6 +38,12 @@ public class PessoaService {
 
 	public void deletar(Long codigo) {
 		pessoaRepository.deleteById(codigo);
+	}
+
+	public Pessoa atualizar(Long codigo, Pessoa pessoa) {
+		Pessoa pessoaSalva = pessoaRepository.getReferenceById(codigo);
+		BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo");
+		return pessoaRepository.save(pessoaSalva);
 	}
 
 }

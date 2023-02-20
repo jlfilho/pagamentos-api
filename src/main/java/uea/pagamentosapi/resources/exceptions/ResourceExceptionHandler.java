@@ -18,6 +18,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import uea.pagamentosapi.services.exceptions.ObjectNotFountException;
 
@@ -61,6 +62,17 @@ public class ResourceExceptionHandler {
 
 	@ExceptionHandler(EmptyResultDataAccessException.class)
 	public ResponseEntity<StandardError> emptyResultDataAccessException(EmptyResultDataAccessException e,
+			HttpServletRequest resquest) {
+		List<String> errors = Arrays
+				.asList(messageSource.getMessage("recurso.indisponivel", null, LocaleContextHolder.getLocale()));
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		StandardError err = new StandardError(Instant.now(), status.value(), errors, e.getMessage(),
+				resquest.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+
+	@ExceptionHandler(EntityNotFoundException.class)
+	public ResponseEntity<StandardError> entityNotFoundException(EntityNotFoundException e,
 			HttpServletRequest resquest) {
 		List<String> errors = Arrays
 				.asList(messageSource.getMessage("recurso.indisponivel", null, LocaleContextHolder.getLocale()));
