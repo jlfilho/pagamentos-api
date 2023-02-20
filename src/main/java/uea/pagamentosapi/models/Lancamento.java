@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import uea.pagamentosapi.models.enums.TipoLancamento;
 
 @Entity
@@ -25,24 +26,29 @@ public class Lancamento {
 	private Long codigo;
 
 	private String descricao;
-
+	
+	@NotNull
 	@Column(name = "data_vencimento")
 	private LocalDate dataVencimento;
 
 	@Column(name = "data_pagamento")
 	private LocalDate dataPagamento;
-
+	
+	@NotNull
 	private BigDecimal valor;
 
 	private String observacao;
 
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	private TipoLancamento tipo;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "codigo_categoria")
 	private Categoria categoria;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "codigo_pessoa")
 	private Pessoa pessoa;
