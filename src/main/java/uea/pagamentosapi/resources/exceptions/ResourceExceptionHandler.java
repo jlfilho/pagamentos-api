@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import uea.pagamentosapi.services.exceptions.ObjectNotFountException;
+import uea.pagamentosapi.services.exceptions.PessoaInativaException;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
@@ -93,6 +94,19 @@ public class ResourceExceptionHandler {
 				resquest.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
+	
+	@ExceptionHandler(PessoaInativaException.class)
+	public ResponseEntity<StandardError> pessoaInativaException(PessoaInativaException e,
+			HttpServletRequest resquest) {
+		List<String> errors = Arrays
+				.asList(messageSource.getMessage("pessoa.inativa", null, LocaleContextHolder.getLocale()));
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		StandardError err = new StandardError(Instant.now(), status.value(), errors, e.getMessage(),
+				resquest.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	
 
 	private List<String> criarListaDeErros(BindingResult bindingResult) {
 		List<String> erros = new ArrayList<>();

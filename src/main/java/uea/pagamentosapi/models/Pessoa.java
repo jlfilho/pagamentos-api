@@ -2,12 +2,15 @@ package uea.pagamentosapi.models;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -18,11 +21,14 @@ public class Pessoa {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
+	
 	@NotNull
 	@Size(min = 3, max = 50)
 	private String nome;
+	
 	@NotNull
 	private Boolean ativo;
+	
 	@Embedded
 	private Endereco endereco;
 	
@@ -62,6 +68,10 @@ public class Pessoa {
 
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
+	}
+	
+	public Boolean isAtivo() {
+		return this.ativo;
 	}
 
 	public Endereco getEndereco() {
