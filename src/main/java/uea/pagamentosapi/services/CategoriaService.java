@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import uea.pagamentosapi.model.Categoria;
+import uea.pagamentosapi.models.Categoria;
 import uea.pagamentosapi.repositories.CategoriaRepository;
 import uea.pagamentosapi.services.exceptions.ObjectNotFountException;
 

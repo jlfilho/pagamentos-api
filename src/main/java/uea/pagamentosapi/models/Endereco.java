@@ -1,4 +1,4 @@
-package uea.pagamentosapi.model;
+package uea.pagamentosapi.models;
 
 import jakarta.persistence.Embeddable;
 

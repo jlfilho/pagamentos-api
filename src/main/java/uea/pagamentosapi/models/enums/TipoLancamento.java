@@ -1,4 +1,4 @@
-package uea.pagamentosapi.model.enums;
+package uea.pagamentosapi.models.enums;
 
 public enum TipoLancamento {
 	RECEITA,

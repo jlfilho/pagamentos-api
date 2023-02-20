@@ -1,4 +1,4 @@
-package uea.pagamentosapi.model;
+package uea.pagamentosapi.models;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,7 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import uea.pagamentosapi.model.enums.TipoLancamento;
+import uea.pagamentosapi.models.enums.TipoLancamento;
 
 @Entity
 @Table(name = "lancamento")

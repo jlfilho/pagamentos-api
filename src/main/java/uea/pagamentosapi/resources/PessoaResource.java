@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import jakarta.validation.Valid;
-import uea.pagamentosapi.model.Endereco;
-import uea.pagamentosapi.model.Pessoa;
+import uea.pagamentosapi.models.Endereco;
+import uea.pagamentosapi.models.Pessoa;
 import uea.pagamentosapi.services.PessoaService;
 
 @RestController

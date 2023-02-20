@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import jakarta.validation.Valid;
-import uea.pagamentosapi.model.Categoria;
+import uea.pagamentosapi.models.Categoria;
 import uea.pagamentosapi.services.CategoriaService;
 
 @RestController

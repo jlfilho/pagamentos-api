@@ -8,8 +8,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import uea.pagamentosapi.model.Endereco;
-import uea.pagamentosapi.model.Pessoa;
+import uea.pagamentosapi.models.Endereco;
+import uea.pagamentosapi.models.Pessoa;
 import uea.pagamentosapi.repositories.PessoaRepository;
 import uea.pagamentosapi.services.exceptions.ObjectNotFountException;
 
