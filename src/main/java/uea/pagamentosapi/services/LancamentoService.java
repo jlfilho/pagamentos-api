@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import uea.pagamentosapi.models.Lancamento;
 import uea.pagamentosapi.models.Pessoa;
 import uea.pagamentosapi.repositories.LancamentoRepository;
+import uea.pagamentosapi.repositories.filter.LancamentoFilter;
 import uea.pagamentosapi.services.exceptions.ObjectNotFountException;
 import uea.pagamentosapi.services.exceptions.PessoaInativaException;
 
@@ -22,8 +23,8 @@ public class LancamentoService {
 	@Autowired
 	private PessoaService pessoaService;
 	
-	public List<Lancamento> listar() {
-		return lancamentoRepository.findAll();
+	public List<Lancamento> pesquisar(LancamentoFilter lancamentoFilter) {
+		return lancamentoRepository.filtrar(lancamentoFilter);
 	}
 	
 	public Lancamento criar(Lancamento lancamento) {

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import jakarta.validation.Valid;
 import uea.pagamentosapi.models.Lancamento;
+import uea.pagamentosapi.repositories.filter.LancamentoFilter;
 import uea.pagamentosapi.services.LancamentoService;
 
 @RestController
@@ -25,8 +26,8 @@ public class LancamentoResource {
 	private LancamentoService lancamentoService;
 	
 	@GetMapping
-	public ResponseEntity<List<Lancamento>> listar() {
-		List<Lancamento> lancamentos = lancamentoService.listar();
+	public ResponseEntity<List<Lancamento>> pesquisar(LancamentoFilter lancamentoFilter) {
+		List<Lancamento> lancamentos = lancamentoService.pesquisar(lancamentoFilter);
 		return ResponseEntity.ok().body(lancamentos);
 	}
 	
