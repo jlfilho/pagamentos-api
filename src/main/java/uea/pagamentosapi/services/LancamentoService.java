@@ -43,5 +43,9 @@ public class LancamentoService {
 			throw new ObjectNotFountException(codigo);
 		}
 	}
+	
+	public void deletar(Long codigo) {
+		lancamentoRepository.deleteById(codigo);
+	}
 
 }
