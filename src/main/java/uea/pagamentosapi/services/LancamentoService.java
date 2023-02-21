@@ -1,10 +1,11 @@
 package uea.pagamentosapi.services;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import uea.pagamentosapi.models.Lancamento;
@@ -23,8 +24,8 @@ public class LancamentoService {
 	@Autowired
 	private PessoaService pessoaService;
 	
-	public List<Lancamento> pesquisar(LancamentoFilter lancamentoFilter) {
-		return lancamentoRepository.filtrar(lancamentoFilter);
+	public Page<Lancamento> pesquisar(LancamentoFilter lancamentoFilter, Pageable pageable) {
+		return lancamentoRepository.filtrar(lancamentoFilter, pageable);
 	}
 	
 	public Lancamento criar(Lancamento lancamento) {
