@@ -1,41 +1,32 @@
 package uea.pagamentosapi.models;
 
-import java.util.Objects;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "categoria")
-public class Categoria {
-	
+@Table(name = "permissao")
+public class Permissao {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	
-	@NotNull
-	@Size(min = 3, max = 20)
-	private String nome;
+	private String descricao;
 	
-	public Categoria() {
-		super();
-	}
-	
-	public Categoria(Long codigo) {
-		super();
-		this.codigo = codigo;
+	public Permissao () {
+		
 	}
 
-	public Categoria(Long codigo, String nome) {
+	public Permissao(Long codigo, String descricao) {
 		super();
 		this.codigo = codigo;
-		this.nome = nome;
+		this.descricao = descricao;
 	}
+
+
 
 	public Long getCodigo() {
 		return codigo;
@@ -45,17 +36,20 @@ public class Categoria {
 		this.codigo = codigo;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(codigo);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		return result;
 	}
 
 	@Override
@@ -66,8 +60,13 @@ public class Categoria {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
-		return Objects.equals(codigo, other.codigo);
+		Permissao other = (Permissao) obj;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		return true;
 	}
 
 }
