@@ -55,12 +55,12 @@ public class PagamentosApiApplication implements CommandLineRunner {
 
 	private void runLancamento() {
 
-		Lancamento l1 = new Lancamento(null, "Salário mensal", LocalDate.parse("2017-06-10"),
-				LocalDate.parse("2017-06-10"), new BigDecimal(6500.00), "Distribuição de lucros",
+		Lancamento l1 = new Lancamento(null, "Salário mensal", LocalDate.parse("2023-02-10"),
+				LocalDate.parse("2023-02-10"), new BigDecimal(6500.00), "Distribuição de lucros",
 				TipoLancamento.RECEITA, new Categoria(1L), new Pessoa(1L));
 
-		Lancamento l2 = new Lancamento(null, "Supermercado", LocalDate.parse("2017-02-10"),
-				LocalDate.parse("2017-02-10"), new BigDecimal(100.32), null, TipoLancamento.DESPESA, new Categoria(2L),
+		Lancamento l2 = new Lancamento(null, "Supermercado", LocalDate.parse("2023-02-10"),
+				LocalDate.parse("2023-02-10"), new BigDecimal(100.32), null, TipoLancamento.DESPESA, new Categoria(1L),
 				new Pessoa(2L));
 
 		lancamentoRepository.saveAll(Arrays.asList(l1, l2));

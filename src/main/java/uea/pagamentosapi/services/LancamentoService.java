@@ -1,5 +1,7 @@
 package uea.pagamentosapi.services;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -9,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import uea.pagamentosapi.dto.LancamentoEstatisticaCategoria;
 import uea.pagamentosapi.models.Lancamento;
 import uea.pagamentosapi.models.Pessoa;
 import uea.pagamentosapi.repositories.LancamentoRepository;
@@ -77,6 +80,10 @@ public class LancamentoService {
 		if (pessoa.get() == null || !pessoa.get().isAtivo()) {
 			throw new PessoaInativaException(lancamento.getPessoa().getCodigo());
 		}
+	}
+	
+	public List<LancamentoEstatisticaCategoria> porCategoria(LocalDate mesReferencia) {
+		return this.lancamentoRepository.porCategoria(mesReferencia);
 	}
 
 }

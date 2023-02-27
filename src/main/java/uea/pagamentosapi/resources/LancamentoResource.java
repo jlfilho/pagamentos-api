@@ -1,6 +1,8 @@
 package uea.pagamentosapi.resources;
 
 import java.net.URI;
+import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import jakarta.validation.Valid;
+import uea.pagamentosapi.dto.LancamentoEstatisticaCategoria;
 import uea.pagamentosapi.models.Lancamento;
 import uea.pagamentosapi.repositories.filter.LancamentoFilter;
 import uea.pagamentosapi.repositories.projection.ResumoLancamento;
@@ -29,6 +32,12 @@ public class LancamentoResource {
 
 	@Autowired
 	private LancamentoService lancamentoService;
+	
+	@GetMapping("/estatisticas/por-categoria")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')")
+	public List<LancamentoEstatisticaCategoria> porCategoria() {
+		return lancamentoService.porCategoria(LocalDate.now());
+	}	
 
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')")
