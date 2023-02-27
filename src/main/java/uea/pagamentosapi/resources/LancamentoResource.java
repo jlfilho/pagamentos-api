@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import jakarta.validation.Valid;
 import uea.pagamentosapi.dto.LancamentoEstatisticaCategoria;
+import uea.pagamentosapi.dto.LancamentoEstatisticaDia;
 import uea.pagamentosapi.models.Lancamento;
 import uea.pagamentosapi.repositories.filter.LancamentoFilter;
 import uea.pagamentosapi.repositories.projection.ResumoLancamento;
@@ -32,6 +33,12 @@ public class LancamentoResource {
 
 	@Autowired
 	private LancamentoService lancamentoService;
+	
+	@GetMapping("/estatisticas/por-dia")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')")
+	public List<LancamentoEstatisticaDia> porDia() {
+		return lancamentoService.porDia(LocalDate.now());
+	}	
 	
 	@GetMapping("/estatisticas/por-categoria")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')")

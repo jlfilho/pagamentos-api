@@ -17,6 +17,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import uea.pagamentosapi.dto.LancamentoEstatisticaCategoria;
+import uea.pagamentosapi.dto.LancamentoEstatisticaDia;
 import uea.pagamentosapi.models.Lancamento;
 import uea.pagamentosapi.repositories.filter.LancamentoFilter;
 import uea.pagamentosapi.repositories.projection.ResumoLancamento;
@@ -25,6 +26,38 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 
 	@PersistenceContext
 	private EntityManager manager;
+	
+	@Override
+	public List<LancamentoEstatisticaDia> porDia(LocalDate mesReferencia) {
+		CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+		
+		CriteriaQuery<LancamentoEstatisticaDia> criteriaQuery = criteriaBuilder.
+				createQuery(LancamentoEstatisticaDia.class);
+		
+		Root<Lancamento> root = criteriaQuery.from(Lancamento.class);
+		
+		criteriaQuery.select(criteriaBuilder.construct(LancamentoEstatisticaDia.class, 
+				root.get("tipo"),
+				root.get("dataVencimento"),
+				criteriaBuilder.sum(root.get("valor"))));
+		
+		LocalDate primeiroDia = mesReferencia.withDayOfMonth(1);
+		LocalDate ultimoDia = mesReferencia.withDayOfMonth(mesReferencia.lengthOfMonth());
+		
+		criteriaQuery.where(
+				criteriaBuilder.greaterThanOrEqualTo(root.get("dataVencimento"), 
+						primeiroDia),
+				criteriaBuilder.lessThanOrEqualTo(root.get("dataVencimento"), 
+						ultimoDia));
+		
+		criteriaQuery.groupBy(root.get("tipo"), 
+				root.get("dataVencimento"));
+		
+		TypedQuery<LancamentoEstatisticaDia> typedQuery = manager
+				.createQuery(criteriaQuery);
+		
+		return typedQuery.getResultList();
+	}
 
 	@Override
 	public List<LancamentoEstatisticaCategoria> porCategoria(LocalDate mesReferencia) {

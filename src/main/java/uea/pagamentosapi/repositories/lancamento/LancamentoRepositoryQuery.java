@@ -7,12 +7,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import uea.pagamentosapi.dto.LancamentoEstatisticaCategoria;
+import uea.pagamentosapi.dto.LancamentoEstatisticaDia;
 import uea.pagamentosapi.models.Lancamento;
 import uea.pagamentosapi.repositories.filter.LancamentoFilter;
 import uea.pagamentosapi.repositories.projection.ResumoLancamento;
 
 public interface LancamentoRepositoryQuery {
 	public List<LancamentoEstatisticaCategoria> porCategoria(LocalDate mesReferencia);
+	public List<LancamentoEstatisticaDia> porDia(LocalDate mesReferencia);
+	
 	public Page<Lancamento> filtrar(LancamentoFilter lancamentoFilter, Pageable pageable);
 	public Page<ResumoLancamento> resumir(LancamentoFilter lancamentoFilter, Pageable pageable);
 

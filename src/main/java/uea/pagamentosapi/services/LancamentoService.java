@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import uea.pagamentosapi.dto.LancamentoEstatisticaCategoria;
+import uea.pagamentosapi.dto.LancamentoEstatisticaDia;
 import uea.pagamentosapi.models.Lancamento;
 import uea.pagamentosapi.models.Pessoa;
 import uea.pagamentosapi.repositories.LancamentoRepository;
@@ -84,6 +85,10 @@ public class LancamentoService {
 	
 	public List<LancamentoEstatisticaCategoria> porCategoria(LocalDate mesReferencia) {
 		return this.lancamentoRepository.porCategoria(mesReferencia);
+	}
+	
+	public List<LancamentoEstatisticaDia> porDia(LocalDate mesReferencia) {
+		return this.lancamentoRepository.porDia(mesReferencia);
 	}
 
 }
