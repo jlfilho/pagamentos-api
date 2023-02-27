@@ -12,6 +12,7 @@ import uea.pagamentosapi.models.Lancamento;
 import uea.pagamentosapi.models.Pessoa;
 import uea.pagamentosapi.repositories.LancamentoRepository;
 import uea.pagamentosapi.repositories.filter.LancamentoFilter;
+import uea.pagamentosapi.repositories.projection.ResumoLancamento;
 import uea.pagamentosapi.services.exceptions.ObjectNotFountException;
 import uea.pagamentosapi.services.exceptions.PessoaInativaException;
 
@@ -26,6 +27,10 @@ public class LancamentoService {
 	
 	public Page<Lancamento> pesquisar(LancamentoFilter lancamentoFilter, Pageable pageable) {
 		return lancamentoRepository.filtrar(lancamentoFilter, pageable);
+	}
+	
+	public Page<ResumoLancamento> resumir(LancamentoFilter lancamentoFilter, Pageable pageable) {
+		return lancamentoRepository.resumir(lancamentoFilter, pageable);
 	}
 	
 	public Lancamento criar(Lancamento lancamento) {
