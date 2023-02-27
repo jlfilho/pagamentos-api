@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,12 +26,14 @@ public class CategoriaResource {
 	private CategoriaService categoriaService;
 	
 	@GetMapping
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA') and hasAuthority('SCOPE_read')" )
 	public ResponseEntity<List<Categoria>> listar() {
 		List<Categoria> categorias = categoriaService.listar();
 		return ResponseEntity.ok().body(categorias);
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_CATEGORIA') and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria) {
 		Categoria categoriaSalva = categoriaService.criar(categoria);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{codigo}")
@@ -39,6 +42,7 @@ public class CategoriaResource {
 	}
 	
 	@GetMapping(value = "/{codigo}")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA') and hasAuthority('SCOPE_read')")
 	public ResponseEntity<?> buscarPorCodigo(@PathVariable Long codigo) {
 		Categoria categoria = categoriaService.buscarPorCodigo(codigo);
 		

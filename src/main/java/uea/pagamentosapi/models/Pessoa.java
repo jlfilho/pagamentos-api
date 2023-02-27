@@ -14,28 +14,33 @@ import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-@Entity 
+@Entity
 @Table(name = "pessoa")
 public class Pessoa {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
-	
+
 	@NotNull
 	@Size(min = 3, max = 50)
 	private String nome;
-	
+
 	@NotNull
 	private Boolean ativo;
-	
+
 	@Embedded
 	private Endereco endereco;
-	
-	public Pessoa () {
-		
+
+	public Pessoa() {
+
 	}
-	
+
+	public Pessoa(Long codigo) {
+		this.codigo = codigo;
+
+	}
+
 	public Pessoa(Long codigo, String nome, Boolean ativo, Endereco endereco) {
 		super();
 		this.codigo = codigo;
@@ -43,8 +48,6 @@ public class Pessoa {
 		this.ativo = ativo;
 		this.endereco = endereco;
 	}
-
-
 
 	public Long getCodigo() {
 		return codigo;
@@ -69,7 +72,7 @@ public class Pessoa {
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
 	}
-	
+
 	public Boolean isAtivo() {
 		return this.ativo;
 	}
@@ -98,6 +101,5 @@ public class Pessoa {
 		Pessoa other = (Pessoa) obj;
 		return Objects.equals(codigo, other.codigo);
 	}
-	
 
 }

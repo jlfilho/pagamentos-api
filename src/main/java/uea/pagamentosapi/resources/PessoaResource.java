@@ -4,7 +4,10 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +20,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import jakarta.validation.Valid;
 import uea.pagamentosapi.models.Endereco;
+import uea.pagamentosapi.models.Lancamento;
 import uea.pagamentosapi.models.Pessoa;
+import uea.pagamentosapi.repositories.filter.PessoaFilter;
 import uea.pagamentosapi.services.PessoaService;
 
 @RestController
@@ -26,14 +31,16 @@ public class PessoaResource {
 
 	@Autowired
 	private PessoaService pessoaService;
-
+	
 	@GetMapping
-	public ResponseEntity<List<Pessoa>> listar() {
-		List<Pessoa> pessoas = pessoaService.listar();
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and hasAuthority('SCOPE_read')")
+	public ResponseEntity<Page<Pessoa>> pesquisar(PessoaFilter pessoaFilter, Pageable pageable) {
+		Page<Pessoa> pessoas = pessoaService.pesquisar(pessoaFilter, pageable);
 		return ResponseEntity.ok().body(pessoas);
 	}
 
 	@PostMapping
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_PESSOA') and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Pessoa> criar(@Valid @RequestBody Pessoa pessoa) {
 		Pessoa pessoaSalva = pessoaService.criar(pessoa);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{codigo}")
@@ -42,6 +49,7 @@ public class PessoaResource {
 	}
 
 	@GetMapping(value = "/{codigo}")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and hasAuthority('SCOPE_read')")
 	public ResponseEntity<?> buscarPorCodigo(@PathVariable Long codigo) {
 		Pessoa pessoa = pessoaService.buscarPorCodigo(codigo);
 
@@ -49,24 +57,28 @@ public class PessoaResource {
 	}
 
 	@DeleteMapping(value = "/{codigo}")
+	@PreAuthorize("hasAuthority('ROLE_REMOVER_PESSOA') and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Void> deletar(@PathVariable Long codigo) {
 		pessoaService.deletar(codigo);
 		return ResponseEntity.noContent().build();
 	}
 
 	@PutMapping("/{codigo}")
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_PESSOA') and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Pessoa> atualizar(@PathVariable Long codigo, @Valid @RequestBody Pessoa pessoa) {
 		Pessoa pessoaSalva = pessoaService.atualizar(codigo, pessoa);
 		return ResponseEntity.ok(pessoaSalva);
 	}
 	
 	@PutMapping("/{codigo}/ativo")
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_PESSOA') and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Pessoa> atualizarPropriedadeAtivo(@PathVariable Long codigo, @RequestBody Boolean ativo) {
 		Pessoa pessoaSalva = pessoaService.atualizarPropriedadeAtivo(codigo, ativo);
 		return ResponseEntity.ok(pessoaSalva);
 	}
 	
 	@PutMapping("/{codigo}/endereco")
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_PESSOA') and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Pessoa> atualizarEndereco(@PathVariable Long codigo, @RequestBody Endereco endereco) {
 		Pessoa pessoaSalva = pessoaService.atualizarEndereco(codigo, endereco);
 		return ResponseEntity.ok(pessoaSalva);
