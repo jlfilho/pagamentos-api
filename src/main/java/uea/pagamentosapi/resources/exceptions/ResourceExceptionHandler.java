@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -100,6 +101,28 @@ public class ResourceExceptionHandler {
 			HttpServletRequest resquest) {
 		List<String> errors = Arrays
 				.asList(messageSource.getMessage("pessoa.inativa", null, LocaleContextHolder.getLocale()));
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		StandardError err = new StandardError(Instant.now(), status.value(), errors, e.getMessage(),
+				resquest.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<StandardError> illegalArgumentException(IllegalArgumentException e,
+			HttpServletRequest resquest) {
+		List<String> errors = Arrays
+				.asList(messageSource.getMessage("recurso.operacao-nao-permitida", null, LocaleContextHolder.getLocale()));
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		StandardError err = new StandardError(Instant.now(), status.value(), errors, e.getMessage(),
+				resquest.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(NoSuchElementException.class)
+	public ResponseEntity<StandardError> noSuchElementException(NoSuchElementException e,
+			HttpServletRequest resquest) {
+		List<String> errors = Arrays
+				.asList(messageSource.getMessage("recurso.operacao-nao-permitida", null, LocaleContextHolder.getLocale()));
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		StandardError err = new StandardError(Instant.now(), status.value(), errors, e.getMessage(),
 				resquest.getRequestURI());
