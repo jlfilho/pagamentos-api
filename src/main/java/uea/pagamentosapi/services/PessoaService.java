@@ -6,11 +6,16 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import uea.pagamentosapi.models.Endereco;
+import uea.pagamentosapi.models.Lancamento;
 import uea.pagamentosapi.models.Pessoa;
 import uea.pagamentosapi.repositories.PessoaRepository;
+import uea.pagamentosapi.repositories.filter.LancamentoFilter;
+import uea.pagamentosapi.repositories.filter.PessoaFilter;
 import uea.pagamentosapi.services.exceptions.ObjectNotFountException;
 
 @Service
@@ -21,6 +26,10 @@ public class PessoaService {
 
 	public List<Pessoa> listar() {
 		return pessoaRepository.findAll();
+	}
+	
+	public Page<Pessoa> pesquisar(PessoaFilter pessoaFilter, Pageable pageable) {
+		return pessoaRepository.filtrar(pessoaFilter, pageable);
 	}
 
 	public Pessoa criar(Pessoa pessoa) {
